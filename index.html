@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="icon" href="data:,">
+   <title>CoreHTTP</title>
+   <link rel="stylesheet" href="styles/csc3221.css">
+</head>
+<body>
+   <div class="page-area">
+      <h2>CoreHTTP with Promises</h2>
+		<section>
+			<label for="route">Route:</label>
+			<input type="url" id="route"
+			value="https://jsonplaceholder.typicode.com/users"
+			required  class="full-width">
+		</section>
+      <section>
+         <legend>Choose which type of HTTP request to send:</legend>
+         <label>
+            <input type="radio" name="HTTPtype" value="get" checked>&nbspGET
+            <input type="radio" name="HTTPtype" value="post">&nbspPOST            
+            <input type="radio" name="HTTPtype" value="put">&nbspPUT
+            <input type="radio" name="HTTPtype" value="delete">&nbspDELETE
+         </label>
+         <input type="submit" value="SEND" class="primary-button" id="SendReq">
+      </section>
+      <section>
+         <p><strong>Response:</strong></p>
+         <p id="response"></p>
+      </section>
+   </div>
+</body>
+<script src="scripts/coreHTTP.js"></script>
+<script src="scripts/app.js"></script>
+</html>
