@@ -253,3 +253,40 @@ form {
   h5 { font-size: 2.4rem; }
   h6 { font-size: 2.0rem; }
 }
+
+fieldset {
+  padding: 2rem;
+  margin-bottom: 2.5rem;
+  border: 1px solid lightgray;
+  border-radius: 0.5rem;
+  background-color: #f9f9f9;
+}
+
+legend {
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 0 1rem;
+  color: #333;
+  margin-left: 0.5rem;
+}
+
+fieldset label {
+  margin-top: 1rem;
+  margin-bottom: 0.8rem;
+  display: block;
+}
+
+fieldset input[type="submit"] {
+  margin-top: 1rem;
+}
+
+#response {
+  background-color: #fff;
+  border: 1px solid lightgray;
+  padding: 1rem;
+  border-radius: 0.4rem;
+  font-family: monospace;
+  white-space: pre-wrap;
+  min-height: 8rem;
+}
+
