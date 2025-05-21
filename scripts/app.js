@@ -1,104 +1,39 @@
-// Instantiate the object
-const http = new coreHTTP;
+document.getElementById("SendReq").addEventListener("click", async () => {
+    const url = document.getElementById("route").value;
+    const method = document.getElementById("HTTPtype").value.toUpperCase();
+    const payloadInput = document.getElementById("payload");
+    const responseDisplay = document.getElementById("response");
 
-function ProcessGet(err, res) {
-  	let output;
-  	if (err) {
-    	output = `<p>${err}</p>`;
-  	} else {
-		output = "<ul style=\"list-style:none\">";
-    	const resultSet = JSON.parse(res);
-		let users = [];
-		users = Array.isArray(resultSet) ? resultSet : [resultSet];
-    	users.forEach(user => output += `<li>User ${user.id} - ${user.name}</li>`);
-    	output += "</ul>";
-  	}
-  	document.querySelector("#response").innerHTML = output;
-};
+    let payload = payloadInput ? payloadInput.value.trim() : "";
 
-function ProcessPost(err, res) {
-  	let output;
-  	if (err) {
-    	output = `<p>${err}</p>`;
-	} else {
-		output = "<ul style=\"list-style:none\">";
-		const user = JSON.parse(res);
-		output += `<li>User ${user.id} - ${user.name}</li>`
-		output += "</ul>";
-  	}
-  	document.querySelector("#response").innerHTML = output;
-};
+    const http = new coreHTTP();
 
-function ProcessPut(err, res) {
-  	let output;
-  	if (err) {
-    	output = `<p>${err}</p>`;
-  	} else {
-    	const user = JSON.parse(res);
-    	output = "<ul style=\"list-style:none\">";
-    	output += `<li>User ${user.id} - ${user.name}</li>`
-    	output += "</ul>";
-  	};
-  	document.querySelector("#response").innerHTML = output;
-};
+    let result = await http.processRequest(method, url, payload ? payload : 0);
 
-function ProcessDelete(err, res) {
-  	let output;
-  	if (err) {
-    	output = `<p>${err}</p>`;
-  	} else {
-    	output = "<ul style=\"list-style:none\">";
-    	output += `<li>${res}</li>`
-    	output += "</ul>";
-  	};
-  	document.querySelector("#response").innerHTML = output;
-};
+    // Clear old response
+    responseDisplay.innerHTML = "";
 
-function sendRequest(reqType, targetURL) {
-  	let data;
-  	switch (reqType) {
-   case "get": // Get users from the endpoint
-      http.get(targetURL)
-      .then(resp => ProcessGet(null,resp))
-      .catch(err => ProcessGet(err));
-      break;
-   case "post": // Post (add) user to the endpoint
-      data = {
-			name:"Dennis Vickers",
-      	username:"vickersd",
-      	email:"vickersd@spu.edu"};
-      http.post(targetURL, data)
-      .then(resp => ProcessPost(null,resp))
-      .catch(err => ProcessPost(err));
-      break;
-   case "put": // Put (update) user in the endpoint
-      data = {
-			id: 1,
-         name:"Professor Vickers"};
-      http.put(targetURL, data)
-      .then(resp => ProcessPut(null,resp))
-      .catch(err => ProcessPut(err));
-      break;
-   case "delete": // Delete user in the placeholder website
-      http.delete(targetURL)
-      .then(resp => ProcessDelete(null,resp))
-      .catch(err => ProcessDelete(err));
-      break;            
-  	}
-};
+    // Handle error object
+    if (result.error) {
+        responseDisplay.textContent = result.error;
+        return;
+    }
 
-// Add the listener to the SEND button
-document.querySelector("#SendReq").addEventListener("click", (e) => {
-  	const radioButtons = document.querySelectorAll('input[name="HTTPtype"');
-  	const route = document.querySelector("#route").value;
-  	let reqType;
-  	for (const radioButton of radioButtons) {
-    	if (radioButton.checked) {
-      	reqType = radioButton.value;
-      	break;
-    	};
-  	};
-  	sendRequest(reqType,route);
-
-  	e.preventDefault();
+    // Display array of users
+    if (Array.isArray(result)) {
+        responseDisplay.innerHTML = result.map(user => {
+            return `<div>User ${user.id} - ${user.name}</div>`;
+        }).join("");
+    }
+    // Display single user
+    else if (typeof result === "object") {
+        let id = result.id ? `User ${result.id}` : "User unidentified";
+        let name = result.name || "No name";
+        responseDisplay.innerHTML = `<div>${id} - ${name}</div>`;
+    }
+    // Display plain text
+    else {
+        responseDisplay.textContent = result;
+    }
 });
+

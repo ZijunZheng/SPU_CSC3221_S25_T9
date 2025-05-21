@@ -1,48 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="icon" href="data:,">
-   <title>CoreHTTP</title>
-   <link rel="stylesheet" href="styles/styles.css">
-</head>
-<body>
-   
-   <div class="page-area">
-      <h2>CoreHTTP with Promises</h2>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="data:," />
+    <title>HTTP Library</title>
+    <link rel="stylesheet" href="styles/styles.css" />
+  </head>
+  <body>
+    <div class="page-area">
+      <h2>HTTP Library</h2>
 
       <!-- Route Section -->
       <fieldset>
-         <legend>Route</legend>
-         <label for="route">Enter URL:</label>
-         <input type="url" id="route"
-            value="https://jsonplaceholder.typicode.com/users"
-            required class="full-width">
+        <legend>Route</legend>
+        <label for="route">Enter URL:</label>
+        <input
+          type="url"
+          id="route"
+          value="https://jsonplaceholder.typicode.com/users"
+          required
+          class="full-width"
+        />
       </fieldset>
 
       <!-- HTTP Request Type Section -->
       <fieldset>
-         <legend>Choose HTTP Request Type</legend>
-         <label for="HTTPtype">Method:</label>
-         <select name="HTTPtype" id="HTTPtype" class="full-width">
-            <option value="get" selected>GET</option>
-            <option value="post">POST</option>
-            <option value="put">PUT</option>
-            <option value="delete">DELETE</option>
-         </select>
+        <legend>Choose HTTP Request Type</legend>
+        <label for="HTTPtype">Method:</label>
+        <select name="HTTPtype" id="HTTPtype" class="full-width">
+          <option value="get" selected>GET</option>
+          <option value="post">POST</option>
+          <option value="put">PUT</option>
+          <option value="patch">PATCH</option>
+          <option value="delete">DELETE</option>
+        </select>
       </fieldset>
 
-      <input type="submit" value="SEND" class="primary-button" id="SendReq">
-      
+      <fieldset>
+        <legend>Payload (for POST, PUT, PATCH)</legend>
+        <label for="payload">JSON Body:</label>
+        <textarea
+          id="payload"
+          rows="5"
+          class="full-width"
+          placeholder='{"name": "New Name"}'
+        ></textarea>
+      </fieldset>
+
+      <input type="submit" value="SEND" class="primary-button" id="SendReq" />
+
       <!-- Response Section -->
       <fieldset>
-         <legend>Response</legend>
-         <p id="response"></p>
+        <legend>Response</legend>
+        <p id="response"></p>
       </fieldset>
-   </div>
-
-</body>
-<script src="scripts/coreHTTP.js"></script>
-<script src="scripts/app.js"></script>
+    </div>
+  </body>
+  <script src="scripts/coreHTTP.js"></script>
+  <script src="scripts/app.js"></script>
 </html>
